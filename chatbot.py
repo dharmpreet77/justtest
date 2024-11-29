@@ -57,7 +57,7 @@ GROQ_API_KEY = config_data["GROQ_API_KEY"]
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 # Initialize Groq client
-client = Groq()
+client = Groq(api_key=GROQ_API_KEY)
 
 
 # Function to check and install portaudio if not already built
