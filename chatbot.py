@@ -44,6 +44,22 @@ st.markdown(
 # Embedding CSS in the app
 st.markdown(custom_css, unsafe_allow_html=True)
 
+# App title
+st.title("💇‍♀️ Amber Salon - ChatBot")
+
+
+# Load API Key from config file
+working_dir = os.path.dirname(os.path.abspath(__file__))
+config_data = json.load(open(f"{working_dir}/config.json"))
+GROQ_API_KEY = config_data["GROQ_API_KEY"]
+
+# Save the API key to environment variable
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+
+# Initialize Groq client
+client = Groq()
+
+
 # Function to check and install portaudio if not already built
 def build_portaudio():
     portaudio_path = os.path.abspath("pyaudio_portaudio-master/pyaudio/portaudio-v19")
@@ -100,20 +116,6 @@ def record_audio_to_text():
             st.error(f"An error occurred: {e}")
         return ""
 
-# App title
-st.title("💇‍♀️ Amber Salon - ChatBot")
-
-
-# Load API Key from config file
-working_dir = os.path.dirname(os.path.abspath(__file__))
-config_data = json.load(open(f"{working_dir}/config.json"))
-GROQ_API_KEY = config_data["GROQ_API_KEY"]
-
-# Save the API key to environment variable
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
-
-# Initialize Groq client
-client = Groq()
 
 # Initialize the chat history as Streamlit session state if not present
 if "chat_history" not in st.session_state:
