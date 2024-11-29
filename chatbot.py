@@ -4,7 +4,7 @@ import sys
 import streamlit as st
 from groq import Groq
 import speech_recognition as sr
-
+from httpx import Client
 
 # Add PyAudio source folder to the system path
 sys.path.insert(0, os.path.abspath("pyaudio_portaudio-master/pyaudio"))
@@ -57,7 +57,13 @@ GROQ_API_KEY = config_data["GROQ_API_KEY"]
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 # Initialize Groq client
-client = Groq(api_key=GROQ_API_KEY, base_url="https://api.groq.com")
+
+
+# Create a custom httpx.Client to avoid unsupported keyword arguments
+http_client = Client(base_url="https://api.groq.com")  # Minimal configuration
+
+# Initialize the Groq client with the custom HTTP client
+client = Groq(api_key=GROQ_API_KEY, http_client=http_client)
 
 
 
